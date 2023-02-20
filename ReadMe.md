@@ -1,0 +1,1 @@
+Blendmask implementation description.
