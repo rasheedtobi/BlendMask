@@ -35,7 +35,7 @@ NOTE: It is very important to get the correct combination of CUDA toolkit and to
 
 7. To train use the
 
- OMP_NUM_THREADS=1 python tools/train_net.py \
+    OMP_NUM_THREADS=1 python tools/train_net.py \
     --config-file configs/BlendMask/R_50_1x.yaml \
     --num-gpus 4 \
     OUTPUT_DIR training_dir/blendmask_R_50_1x
