@@ -1,4 +1,4 @@
--------------------------------------------------------READ ME------------------------------------------------------------------------------
+------------------------------------------------READ ME------------------------------------------------------------
 
 The Blendmask implementaion can be done using the aim-uofa/AdelaiDet git repository - https://github.com/aim-uofa/AdelaiDet - This repository contains details of how some image object detection and segmentation models can be implemented 
 using Meta Detectron2 model as a base. The steps involved in the implementation of the Blendmask instance sehgmentation methods are detaled as follows:
