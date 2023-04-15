@@ -52,26 +52,7 @@ import matplotlib.pyplot as plt
 
 
 
-def get_train_cfg(config_file_pth, checkpoint_url, train_dataset_name, test_dataset_name, num_classes, device, output):
-	cfg = get_cfg()
 
-	cfg.merge_from_file('configs/BlendMask/R_50_1x.yaml')
-	# Set score_threshold for builtin models
-	#config_file_pth = 'BlendMask/R_50_1x.yaml'
-	cfg.set_new_allowed(False)
-
-	cfg.MODEL.DEVICE = 'cpu'
-	cfg.MODEL.WEIGHTS = 'training_dir/vac_all_aug_blendmask_R_50_1x/model_final.pth'
-	cfg.MODEL.RETINANET.SCORE_THRESH_TEST = conf
-	cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = conf
-	cfg.MODEL.FCOS.INFERENCE_TH_TEST = conf
-	cfg.MODEL.MEInst.INFERENCE_TH_TEST = conf
-	cfg.MODEL.PANOPTIC_FPN.COMBINE.INSTANCES_CONFIDENCE_THRESH = conf
-	#cfg.MODEL.MASK_ON= True
-	#cfg.MODEL.ROI_HEADS.NUM_CLASSES = 5
-	cfg.freeze()
-
-	return cfg
 
 #To plot groud truth annotation for a specific image named img_name
 def plot_spec_anno_ (dataset_name, img_name):
@@ -127,6 +108,7 @@ def plot_samples(dataset_name, n=1):
         plt.imshow(v.get_image())
         plt.show(0)
 
+#returns object class as a list
 def class_definition(obj_cls):
 	
 	return obj_cls
@@ -138,7 +120,7 @@ def register_data(name,json_file_pth, img_file_pth):
 	
 	
 	
-	
+#To register dataset in line with framework guidlines #Useful to plot ground truth annotations	
 def register_data_with_meta(name, json_file_pth, img_file_pth, CLASS_NAMES):
 	obj_classes =[]
 	
@@ -147,7 +129,7 @@ def register_data_with_meta(name, json_file_pth, img_file_pth, CLASS_NAMES):
 		            json_file= json_file_pth,
 		                        image_root=img_file_pth,
 		                        evaluator_type="coco")
-	
+#To make prediction on new image 	
 def inference_on_img(conf, yaml_file, weights, CLASS_NAMES,val_json, val_imgs, img):
 	DatasetCatalog.clear()
 	MetadataCatalog.clear()
@@ -183,8 +165,8 @@ def inference_on_img(conf, yaml_file, weights, CLASS_NAMES,val_json, val_imgs, i
 	plt.imshow(vs.get_image())
 
 
-
-def inference_on_dataset(conf, yaml_file, weights, CLASS_NAMES,val_json, val_imgs, test_json, test_imgs, path_to_save):
+#To make prediction on images on a dataset "test_imgs"
+def inference_on_dataset(conf, yaml_file, weights, CLASS_NAMES,val_json, val_imgs, test_imgs, path_to_save):
 	DatasetCatalog.clear()
 	MetadataCatalog.clear()
 
@@ -209,30 +191,29 @@ def inference_on_dataset(conf, yaml_file, weights, CLASS_NAMES,val_json, val_img
 		                        evaluator_type="coco")
 		                        
 	
-	register_coco_instances("vacc_test", {}, test_json, test_imgs)
-	#
-	dataset_custom = DatasetCatalog.get('vacc_test')
-	dataset_custom_metadata = MetadataCatalog.get('vacc_test')
-	count =0
+	
+	
+	file_list = []
+	# loop over the files in the directory and append their names to the list
+	for filename in os.listdir(test_imgs):
+		if os.path.isfile(os.path.join(test_imgs, filename)):
+			file_list.append(os.path.join(test_imgs, filename))
+	
 	if not os.path.exists(path_to_save):
 		# Use os.makedirs to create the folder and any necessary parent folders
 		os.makedirs(path_to_save)
-	for d in dataset_custom:
-	    a= d["file_name"]
-	    b = os.path.split(a)
+	for d in file_list:
+	    
+	    b = os.path.split(d)
 	    c=os.path.join(path_to_save,b[1])
-	    img = cv2.imread(a)
+	    img = cv2.imread(d)
 	    #img = img[:, :, ::-1]
 	    outputs, vs= predictorr.run_on_image(img)
 	    
-	    #v = Visualizer(img[:,:,::-1], metadata =dataset_custom_metadata, scale = 0.5)
-	   
 	    
-	    #v= v.draw_instance_predictions(outputs["instances"].to("cpu"))
-	    #cv2_imshow(out.get_image()[:, :, ::-1], 'img')
 	    plt.figure(figsize = (30,45))
 	    plt.imshow(vs.get_image())
-	    print(a)
+	    print(d)
 	    plt.savefig(c)
 	    
 	    
