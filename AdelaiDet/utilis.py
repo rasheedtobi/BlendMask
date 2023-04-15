@@ -106,7 +106,7 @@ def plot_samples(dataset_name, n=1):
         v = v.draw_dataset_dict(s)
         plt.figure(figsize=(15, 24))
         plt.imshow(v.get_image())
-        plt.show(0)
+        
 
 #returns object class as a list
 def class_definition(obj_cls):
