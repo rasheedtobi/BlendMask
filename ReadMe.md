@@ -44,7 +44,11 @@ NOTE: It is very important to get the correct combination of CUDA toolkit and to
 
 
 ![image](https://user-images.githubusercontent.com/66762480/232205909-ee1c1289-60ae-43b3-9076-d79564b60ad6.png)
-![image](https://user-images.githubusercontent.com/66762480/232205865-14d7907c-e308-49d0-ad9a-b8597342705e.png)
+
+![image](https://user-images.githubusercontent.com/66762480/232206227-18eba278-d9b2-48dd-b867-c9d4ba1eafb0.png)
+
+
+
 
 
 
