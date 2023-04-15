@@ -1,4 +1,4 @@
--------------------------------------------------------------------READ ME---------------------------------------------------------------------------------------------
+------------------------------------------------READ ME------------------------------------------------------------
 
 The Blendmask implementaion can be done using the aim-uofa/AdelaiDet git repository - https://github.com/aim-uofa/AdelaiDet - This repository contains details of how some image object detection and segmentation models can be implemented 
 using Meta Detectron2 model as a base. The steps involved in the implementation of the Blendmask instance sehgmentation methods are detaled as follows:
@@ -11,9 +11,9 @@ Older combinations worked E.g. pip install torch==1.10.1+cu113 torchvision==0.11
 3. Install detectron2 using the correct combinatinon of torch and CUDA as seen on https://detectron2.readthedocs.io/en/latest/tutorials/install.html#common-installation-issues E.g. -   pip install 'git+https://github.com/facebookresearch/detectron2.git -
 NOTE: It is very important to get the correct combination of CUDA toolkit and torch before installing Detectron2. Installing torch and Cuda after installing Detectron2 may produce undesirable result.
 
-4.Navigate to AdelaiDET and run the command: 'python setup.py build develop'
+4. Navigate to AdelaiDET and run the command: 'python setup.py build develop'
 
-5.A demo can be run to see if the AdelaiDEt:
+5. A demo can be run to see if the AdelaiDEt:
 	wget -O blendmask_r101_dcni3_5x.pth https://cloudstor.aarnet.edu.au/plus/s/vbnKnQtaGlw8TKv/download
 	python demo/demo.py \
    	 --config-file configs/BlendMask/R_101_dcni3_5x.yaml \
@@ -22,7 +22,7 @@ NOTE: It is very important to get the correct combination of CUDA toolkit and to
     	--opts MODEL.WEIGHTS blendmask_r101_dcni3_5x.pth
 
 
-6 For the traininng proper, the following have to be taken care of:
+6. For the traininng proper, the following have to be taken care of:
 	I.	 The dataset has to be in the specified format. E>g. COCO dataset format.
 	II.	 While still in the AdelaiDet directory run the command - "python datasets/prepare_thing_sem_from_instance.py" to get .npz files of the images to extract relevant information from json
 	III.	 If only one GPU is being used,  navigate to AdelaiDET/defaults.py, and edit to be _C.MODEL.BASIS_MODULE.NORM = "BN".
@@ -35,12 +35,23 @@ NOTE: It is very important to get the correct combination of CUDA toolkit and to
 
 7. To train use the
 
- OMP_NUM_THREADS=1 python tools/train_net.py \
+    OMP_NUM_THREADS=1 python tools/train_net.py \
     --config-file configs/BlendMask/R_50_1x.yaml \
     --num-gpus 4 \
     OUTPUT_DIR training_dir/blendmask_R_50_1x
 
 8. To add the augmentations the DatasetMapper.py can be edited accordingly.
+
+
+![image](https://user-images.githubusercontent.com/66762480/232205909-ee1c1289-60ae-43b3-9076-d79564b60ad6.png)
+
+![image](https://user-images.githubusercontent.com/66762480/232206227-18eba278-d9b2-48dd-b867-c9d4ba1eafb0.png)
+
+
+
+
+
+
 
 
 
