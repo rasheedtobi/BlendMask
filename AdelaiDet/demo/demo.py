@@ -6,6 +6,7 @@ import os
 import time
 import cv2
 import tqdm
+import matplotlib.pyplot as plt
 
 from detectron2.data.detection_utils import read_image
 from detectron2.utils.logger import setup_logger
@@ -85,6 +86,7 @@ if __name__ == "__main__":
             img = read_image(path, format="BGR")
             start_time = time.time()
             predictions, visualized_output = demo.run_on_image(img)
+           
             logger.info(
                 "{}: detected {} instances in {:.2f}s".format(
                     path, len(predictions["instances"]), time.time() - start_time
@@ -99,7 +101,7 @@ if __name__ == "__main__":
                     assert len(args.input) == 1, "Please specify a directory with args.output"
                     out_filename = args.output
                 visualized_output.save(out_filename)
-            else:
+            else:          
                 cv2.imshow(WINDOW_NAME, visualized_output.get_image()[:, :, ::-1])
                 if cv2.waitKey(0) == 27:
                     break  # esc to quit
